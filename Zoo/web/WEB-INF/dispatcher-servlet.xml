@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+    <!--<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>-->
+    <bean class="controladores.ContIndex" id="base">
+        <property name="methodNameResolver">
+            <bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+                <property name="paramName" value="pagina"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean class="controladores.ContPortCliente" id="cliente">
+        <property name="methodNameResolver">
+            <bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+                <property name="paramName" value="caccion"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean class="controladores.ContModEmpDatos" id="modifempleado">
+        <property name="methodNameResolver">
+            <bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+                <property name="paramName" value="modif"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean class="controladores.ContPortEmp" id="portemp">
+        <property name="methodNameResolver">
+            <bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+                <property name="paramName" value="portemp"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean class="controladores.ContAnimalDatos" id="animaldatos">
+        <property name="methodNameResolver">
+            <bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+                <property name="paramName" value="adatos"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean class="controladores.ContPeticiones" id="peticiones">
+        <property name="methodNameResolver">
+            <bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+                <property name="paramName" value="peticiones"/>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean class="controladores.ContComprAbono" id="comprabono">
+        <property name="methodNameResolver">
+            <bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+                <property name="paramName" value="comprar"/>
+            </bean>
+        </property>
+    </bean>
+        
+    <bean class="controladores.ContRegistrar" id="registrar"/>
+    <bean class="controladores.ContLogEmp" id="logemp"/>
+    <bean class="controladores.ContMisDatos" id="datospersonales"/>
+    <bean class="controladores.ContEmpDatos" id="datosempleado"/>
+    <bean class="controladores.ContAnimales" id="animales"/>
+    
+
+    <!--
+    Most controllers will use the ControllerClassNameHandlerMapping above, but
+    for the index controller we are using ParameterizableViewController, so we must
+    define an explicit mapping for it.
+    -->
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="index.htm">indexController</prop>
+                <prop key="base.htm">base</prop>
+                <prop key="cliente.htm">cliente</prop>
+                <prop key="registrar.htm">registrar</prop>
+                <prop key="logemp.htm">logemp</prop>
+                <prop key="portemp.htm">portemp</prop>
+                <prop key="misdatos.htm">datospersonales</prop>
+                <prop key="empdatos.htm">datosempleado</prop>
+                <prop key="animal.htm">animales</prop>
+                <prop key="animaldatos.htm">animaldatos</prop>
+                <prop key="peticiones.htm">peticiones</prop>
+                <prop key="moddatos.htm">modifempleado</prop>
+                <prop key="comprabono.htm">comprabono</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/jsp/"
+          p:suffix=".jsp" />
+
+    <!--
+    The index controller.
+    -->
+    <bean name="indexController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="index" />
+
+</beans>
