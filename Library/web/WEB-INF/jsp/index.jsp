@@ -9,11 +9,22 @@
     </head>
 
     <body>
-        <p>Hello! This is the default welcome page for a Spring Web MVC project.</p>
-        <p><i>To display a different welcome page for this project, modify</i>
-            <tt>index.jsp</tt> <i>, or create your own welcome page then change
-                the redirection in</i> <tt>redirect.jsp</tt> <i>to point to the new
-                welcome page and also update the welcome-file setting in</i>
-            <tt>web.xml</tt>.</p>
+        <h2>Welcome to the library of Springfield</h2>
+        <p>Login</p>
+        <div>
+            Login: can login with username and password and will be directed to one of three possible portals.
+            Portals: staff, student or faculty. Student and faculty will be functionally the same (and thus will be
+            the same page) but will have different amounts of time to borrow books, different limits on number of
+            books available to borrow. Differences between what staff and students/faculty can see: everyone can see
+            that a book has been borrowed and when it should be returned but only staff can see who borrowed a book
+            and can see fines.
+        </div>
+        <p>
+            <ul>
+                <li>Search</li>
+                <li>Events</li>
+            </ul>
+        </p>
+        
     </body>
 </html>
