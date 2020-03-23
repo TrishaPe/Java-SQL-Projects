@@ -10,7 +10,7 @@
 
     <body>
         <h2>Welcome to the library of Springfield</h2>
-        <p>Login</p>
+        <p><a href="login.htm"> Login</a></p>
         <div>
             Login: can login with username and password and will be directed to one of three possible portals.
             Portals: staff, student or faculty. Student and faculty will be functionally the same (and thus will be
