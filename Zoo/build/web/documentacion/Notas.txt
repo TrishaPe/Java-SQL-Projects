@@ -1,0 +1,54 @@
+NOTAS APLICACION
+--  PLAN PAGINAS: Necesito la web estándar del zoo y 3 portales diferentes basadas en quien se loguea: 1.empleados (con vistas diferentes dependiendo de funcion y departamento - jardineros y personal de limpieza necesita poder pedir productos para la compra), 2. la pagina personal del cliente donde se puede loguear para comprar sus tickets y controlar cuándo se caducan, y 3.empleados de taquilla (se puede olvidar en caso de falta de tiempo).
+
+CLIENTES
+-comprar abono
+
+EMPLEADOS
+- pagina portal
+  --calendario de citas (del propio dept), vacaciones (del propio dept, gestores de otros gestores), y fecha de llegada de pedidos (gestores y     dept 1). El calendario muestra peticiones en naranja antes de aprobar, y en verde después de aprobar.
+- pagina datospropios (todos)
+  --opcion a descargar documentos (como nominas)
+- pagina datosemp (gestores)
+  --opcion a descargar documentos (como nominas) de dichos empleados
+
+Pagina empleados:
+- comentarios sobre los becarios?
+
+pagina gestores de dept 1:
+- uno tiene opcion a subir sueldos?
+
+
+PRUEBAS:
+cliente sin abono: Panda21 - osopanda!
+cliente con abono: CSantana - 123ABC
+empleado administrador: USZY118 - CEZG140
+CFO: USZY146 - CEZG156
+empleado gestor (no dept 1): USZY251 - CEZG216
+empleado cuidador: USZY167 - CEZG168
+empleado taquillero: USZY377 - CEZG288
+
+
+--  CALENDARIO en PortEmp con opcion a pedir vacaciones. Muestra vacaciones del propio departamento (en el caso de departamento 1, las vacaciones de todos), citas veterinarias y (en caso de gestores) fechas de llegada de pedidos. Para gestores, muestra nuevas peticiones de vacaciones en otro color diferente.
+--  DATOSEMPLEADO poner opcion a cambiar datos?
+--  DATOSCLIENTE añadir enlace para enviar datos de cliente olvidados
+--  ABONOS: poner datos de forma dinámica?
+--  FECHAS quitar todos los ceros de detrás de las fechas sysdate
+--  LOGUEAR: chequear si ya existe login en sesion para ir de login empleado a login cliente y vice versa (en paginas basicas, ponerle nombre 'persona' a cliente/empleado para imprimir nombre en header?)
+--  CONTROLAR ANTES DE ENVIAR: contraseñas (logcliente, logemp, registrar)
+--  AÑADIREMP: mensaje con cual es el usuario y la contraseña para este empleado?
+--  COMENTARIOS: contador de carácteres sobrantes: stadckoverflow.com/questions/5371089/count-characters-in-textarea
+--  DATOSANIMAL: botón de 'pedir cita' no aparece si ya hay una cita
+--  BORRAR CUENTA: pagina que dice que no se borran los datos de cliente al borrar cuenta
+
+--  VENTAS: en taquilla, el cliente no deja datos, así que con cada compra, registramos tipos de entradas y cantidades y añadimos esa cantidad al numero total de entradas de ese tipo vendido en esa fecha. Por internet, los clientes dejan sus datos, así que podemos aparear clientes con compras. En ese caso, en la tabla registramos codigo de cliente con cada tipo de entrada (compra dos adultos y dos niños, la tabla dice que 2 niños fueron comprado por cliente 84, y debajo que dos adultos fueron comprado por cliente 84, ambos en fecha de 1/1/19). Esto es factible con un login de cliente donde él pueda comprar, y el login de empleado de taquilla donde el/ella tiene su pagina de seleccionar tipos y cantidades. El empleado tiene que tener un boton que lleve a un formulario por si el cliente quiere pedir las entradas de largo plazo en taquilla.
+
+CHECK:
+--  VOLVER/INICIO
+--  HEADER + HEADERSTYLE
+--  LOGIN: poner contraseñas en tipo 'password' para que no se puedan leer
+--  DATOSCLIENTE: NO hay que añadir opcion para 'deregistrarse' de los newsletter porque eso se hace por los mismos correos
+
+
+MOSTRAR EN GRABACION:
+- portal cliente: registrarse, mostrar cliente nuevo en base de datos, mostrar nombre en header, mostrar 'cambiar datos' y 'ver abono', comprar abono, ir a datos cliente, borrar cuenta, y despues mostrar en base de datos que el abono esta alli todavia pero ya no hay usuario y contraseña.
