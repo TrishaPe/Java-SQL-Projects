@@ -1,6 +1,6 @@
 <%-- 
-    Document   : login
-    Created on : Mar 23, 2020, 4:06:28 PM
+    Document   : portal
+    Created on : Mar 23, 2020, 5:28:40 PM
     Author     : Trisha
 --%>
 
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Please log in</h1>
+        <h1>Portal de usuario</h1>
     </body>
 </html>

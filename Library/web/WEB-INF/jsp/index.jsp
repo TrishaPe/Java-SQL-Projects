@@ -9,8 +9,16 @@
     </head>
 
     <body>
+    <header>
+        <form action="portal.htm">
+            <label>Username:</label><input type="text" name="username"/>
+            <label>Password:</label><input type="password" name="password"/>
+            <button type="submit" value="submit">Login</button>
+        </form>
+    </header>
+
+    </head>
         <h2>Welcome to the library of Springfield</h2>
-        <p><a href="login.htm"> Login</a></p>
         <div>
             Login: can login with username and password and will be directed to one of three possible portals.
             Portals: staff, student or faculty. Student and faculty will be functionally the same (and thus will be

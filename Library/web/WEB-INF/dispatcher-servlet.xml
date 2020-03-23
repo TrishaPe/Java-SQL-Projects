@@ -11,7 +11,7 @@
 
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
 
-    <bean class="controllers.ContLogin" id="login"/>
+    <bean class="controllers.ContPortal" id="portal"/>
 
     <!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but
@@ -22,7 +22,7 @@
         <property name="mappings">
             <props>
                 <prop key="index.htm">indexController</prop>
-                <prop key="login.htm">login</prop>
+                <prop key="portal.htm">portal</prop>
             </props>
         </property>
     </bean>
