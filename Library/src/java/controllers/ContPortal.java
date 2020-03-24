@@ -9,6 +9,11 @@ public class ContPortal implements Controller{
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        
+        
+        
+        
+        
         ModelAndView mv=new ModelAndView("portal");
         return mv;
     }
