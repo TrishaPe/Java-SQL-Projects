@@ -4,9 +4,9 @@
 create table person(
     person_cod number,
     type varchar2(8),
-    name varchar2(25),
-    address varchar2(25)
-)
+    name varchar2(27),
+    address varchar2(35)
+);
 
 alter table person
 add constraint PK_person
@@ -17,10 +17,8 @@ create table books(
     isbn number,
     title varchar2(50),
     author_cod number,
-    genre1 number,
-    genre2 number,
     notes varchar2(50)
-)
+);
 
 alter table books
 add constraint PK_books
@@ -29,7 +27,7 @@ primary key (book_cod);
 create table authors(
     author_cod number,
     name varchar2(25)
-)
+);
 
 alter table authors
 add constraint PK_author
@@ -37,19 +35,24 @@ primary key (author_cod);
 
 create table genres(
     genre_cod number,
-    genre varchar2(15)
-)
+    genre varchar2(20)
+);
 
 alter table genres
 add constraint PK_genre
 primary key (genre_cod);
 
+create table genrejunction(
+    book_cod number,
+    genre_cod number
+);
+
 create table borrowed(
     book_cod number,
     person_cod number,
     borrowdate date,
-    returndate date,
-)
+    returndate date
+);
 /*Fine should be calculated automatically when return date is surpassed. This date can be extended upon request,
 for maximum one week for students and two weeks for faculty and staff (a week is 7 natural days).
 Fine is 0.5$ per day for students, 0.3$ for staff and faculty.
@@ -70,7 +73,7 @@ create table borrowhist(
     borrowdate date,
     returndate date,
     fine float
-)
+);
 
 #FOREIGN KEYS
 

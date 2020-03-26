@@ -27,12 +27,16 @@
             that a book has been borrowed and when it should be returned but only staff can see who borrowed a book
             and can see fines.
         </div>
-        <p>
+        <div>
             <ul>
                 <li>Search</li>
                 <li>Events</li>
             </ul>
-        </p>
+        </div>
+
+        
+        
+        
         
     </body>
 </html>
