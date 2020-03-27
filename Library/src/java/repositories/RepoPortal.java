@@ -3,42 +3,131 @@ package repositories;
 import java.sql.*;
 import java.util.*;
 import models.Book;
+import models.Borrow;
 
 public class RepoPortal {
     Connection cn;
-    
+
     public RepoPortal() throws SQLException{
         //Create database connection
         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
         this.cn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","oracle");
     }
     
+    private Book setBook(Book book, ResultSet res) throws SQLException{
+        //set most of the attributes of the Book object (genre will be arranged separately)
+        book.setBookcode(res.getInt("book_cod"));
+        book.setIsbn(res.getInt("isbn"));
+        book.setTitle(res.getString("title"));
+        book.setAutcode(res.getInt("author_cod"));
+        book.setAutname(res.getString("name"));
+        book.setNotes(res.getString("notes"));
+        return book;
+    }
+    
+    private ArrayList<Book> deleteExtra(ArrayList<Book> books){
+        //Deleting the first instance of a book with multiple genres - that is, the one that hasn't had the second genre
+        //concatenated with the first one and thus only has one genre.
+        Collections.reverse(books);
+        int code2=0;
+        for (Book book:books){
+            if (book.getBookcode()==code2){
+                books.remove(book);
+                continue;
+            }
+            code2=book.getBookcode();
+        }
+        //Another Collections.reverse could be done here to get books back in Primary Key order, but JSP page will
+        //order by title or author.
+        return books;
+    }
+    
     public ArrayList<Book> getAllBooks() throws SQLException{
         ArrayList<Book> books=new ArrayList();
+        //get all books from database, put into ArrayList as Book objects
         Statement sentencia=cn.createStatement();
-        String sql="select books.book_cod, books.isbn, books.title, books.author_cod, authors.name, books.notes from books left join authors on books.author_cod=authors.author_cod";
-        ResultSet res=sentencia.executeQuery(sql);
+        String booksql="select books.book_cod, books.isbn, books.title, books.author_cod, authors.aname, books.notes, bookgenre.genre from books join authors on books.author_cod=authors.author_cod left join (SELECT books.book_cod, title, genre FROM book_genre JOIN books ON books.book_cod = book_genre.book_cod JOIN genres ON genres.genre_cod = book_genre.genre_cod) bookgenre on books.book_cod=bookgenre.book_cod order by book_cod";
+        //booksql gives book code, isbn, title, author code, author name, notes and genre ordered by book code
+        //Query is ordered by Primary Key to concatenate genres and erase duplicates. JSP page will have filters to order by author or title.
+        ResultSet res=sentencia.executeQuery(booksql);
+        //the following two variables facilitate concatenating genres, if a book has two
+        int code=0;
+        String genre="string";
         while (res.next()){
             Book book=new Book();
-            book.setBookcode(res.getInt("book_cod"));
-            book.setIsbn(res.getInt("isbn"));
-            book.setTitle(res.getString("title"));
-            book.setAutcode(res.getInt("author_code"));
-            book.setAutname(res.getString("name"));
-            book.setNotes(res.getString("notes"));
+            setBook(book, res);
+            if (code==res.getInt("book_cod")){
+                genre=genre+", "+res.getString("genre");
+                book.setGenre(genre);
+            }else{
+                book.setGenre(res.getString("genre"));
+            }
+            code=res.getInt("book_cod");
+            genre=res.getString("genre");
             books.add(book);
         }
+        
+        deleteExtra(books);
+        
         return books;
     }
     
-    public ArrayList<Book> getPersonBooks(int personcode){
+    public ArrayList<Book> getPersonBooks(int personcode) throws SQLException{
+        //Gets the books borrowed by the logged-in person. See getPersonBorrows for the borrow dates and fines.
         ArrayList<Book> books=new ArrayList();
+        //get all books from database, put into ArrayList as Book objects
+        Statement sentencia=cn.createStatement();
+        String borrowersql="select books.book_cod, books.isbn, books.title, authors.name from books join authors on books.author_cod=authors.author_cod left join (select books.book_cod, person.person_cod from books join borrowed on books.book_cod = borrowed.book_cod join person on person.person_cod = borrowed.person_cod) borrower on books.book_cod=borrower.book_cod where borrower.person_cod="+personcode;
+        //borrowersql gives book code (to extend lease), isbn, title, and author name - only for books borrowed by Person
+        ResultSet res=sentencia.executeQuery(borrowersql);
+        
+        while (res.next()){
+            Book book=new Book();
+            setBook(book, res);
+            books.add(book);
+        }
+        deleteExtra(books);
+        
         return books;
     }
     
-    public ArrayList<Book> getBorrowedBooks(){
-        ArrayList<Book> books=new ArrayList();
-        return books;
+    public ArrayList<Borrow> getPersonBorrows(int personcode) throws SQLException{
+        ArrayList<Borrow> borrows=new ArrayList();
+        Statement sentencia=cn.createStatement();
+        String borrowsql="select borrowed.book_cod, borrowed.borrowdate, borrowed.returndate, person.type from borrowed join person on borrowed.person_cod=person.person_cod where borrowed.person_cod="+personcode;
+        //borrowsql gives book code, borrow date, return date, and person type for Person
+        ResultSet res=sentencia.executeQuery(borrowsql);
+        while (res.next()){
+            Borrow borrow=new Borrow();
+            borrow.setBookcode(res.getInt("book_cod"));
+            borrow.setPersoncode(personcode);
+            borrow.setPersontype(res.getString("type"));
+            borrow.setOutdate(res.getDate("borrowdate"));
+            borrow.setIndate(res.getDate("returndate"));
+            borrow.setFine();
+            borrows.add(borrow);
+        }
+        return borrows;
+    }
+    
+    
+    public ArrayList<Borrow> getAllBorrows() throws SQLException{
+        ArrayList<Borrow> borrows=new ArrayList();
+        Statement sentencia=cn.createStatement();
+        String allborrowsql="select borrowed.book_cod, borrowed.borrowdate, borrowed.returndate, person.person_cod, person.type from borrowed join person on borrowed.person_cod=person.person_cod";
+        //allborrowsql gives book code, borrow date, return date, person code, person name and person type for all borrows.
+        ResultSet res=sentencia.executeQuery(allborrowsql);
+        while (res.next()){
+            Borrow borrow=new Borrow();
+            borrow.setBookcode(res.getInt("book_cod"));
+            borrow.setPersoncode(res.getInt("person_cod"));
+            borrow.setPersontype(res.getString("type"));
+            borrow.setOutdate(res.getDate("borrowdate"));
+            borrow.setIndate(res.getDate("returndate"));
+            borrow.setFine();
+            borrows.add(borrow);
+        }
+        return borrows;
     }
     
     

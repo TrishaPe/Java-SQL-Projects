@@ -4,7 +4,7 @@
 create table person(
     person_cod number,
     type varchar2(8),
-    name varchar2(27),
+    pname varchar2(27),
     address varchar2(35)
 );
 
@@ -17,6 +17,7 @@ create table books(
     isbn number,
     title varchar2(50),
     author_cod number,
+    available varchar2(1),
     notes varchar2(50)
 );
 
@@ -26,7 +27,7 @@ primary key (book_cod);
 
 create table authors(
     author_cod number,
-    name varchar2(25)
+    aname varchar2(25)
 );
 
 alter table authors
@@ -42,7 +43,7 @@ alter table genres
 add constraint PK_genre
 primary key (genre_cod);
 
-create table genrejunction(
+create table book_genre(
     book_cod number,
     genre_cod number
 );

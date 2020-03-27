@@ -57,12 +57,12 @@ public class Book {
         this.autname = autname;
     }
 
-    public String getGenre1() {
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre1(String genre1) {
-        this.genre = genre1;
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
     
 }
