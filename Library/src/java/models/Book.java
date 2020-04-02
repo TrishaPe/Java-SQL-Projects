@@ -2,7 +2,7 @@ package models;
 
 public class Book {
     private int bookcode;
-    private int isbn;
+    private String isbn;
     private String title;
     private int autcode;
     private String autname;
@@ -17,11 +17,11 @@ public class Book {
         this.bookcode = bookcode;
     }
 
-    public int getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(int isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 

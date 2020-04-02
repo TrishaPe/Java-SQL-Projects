@@ -11,8 +11,8 @@
     <body>
     <header>
         <form action="portal.htm">
-            <label>Username:</label><input type="text" name="username"/>
-            <label>Password:</label><input type="password" name="password"/>
+            <label>Username:</label><input type="text" name="txtUser"/>
+            <label>Password:</label><input type="password" name="txtPass"/>
             <button type="submit" value="submit">Login</button>
         </form>
     </header>
@@ -21,15 +21,15 @@
         <h2>Welcome to the library of Springfield</h2>
         <div>
             Login: can login with username and password and will be directed to one of three possible portals.
-            Portals: staff, student or faculty. Student and faculty will be functionally the same (and thus will be
+            Portals: staff, student or faculty (one page). Student and faculty will be functionally the same (and thus will be
             the same page) but will have different amounts of time to borrow books, different limits on number of
             books available to borrow. Differences between what staff and students/faculty can see: everyone can see
             that a book has been borrowed and when it should be returned but only staff can see who borrowed a book
-            and can see fines.
+            someone else borrowed.
         </div>
         <div>
             <ul>
-                <li>Search</li>
+                <li><a href="booklist.htm">List of books</a></li>
                 <li>Events</li>
             </ul>
         </div>

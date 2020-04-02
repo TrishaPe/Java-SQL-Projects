@@ -5,6 +5,8 @@ create table person(
     person_cod number,
     type varchar2(8),
     pname varchar2(27),
+    username varchar2(20),
+    pass varchar2(20),
     address varchar2(35)
 );
 

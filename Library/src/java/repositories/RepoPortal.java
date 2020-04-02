@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.*;
 import models.Book;
 import models.Borrow;
+import models.Person;
 
 public class RepoPortal {
     Connection cn;
@@ -14,10 +15,41 @@ public class RepoPortal {
         this.cn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","oracle");
     }
     
+    public Person login(String username, String password) throws SQLException{
+        Connection cnx = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","oracle");
+        PreparedStatement sentenciax=cnx.prepareStatement("select username from person where username=?");
+        sentenciax.setString(1, password);
+        ResultSet resx=sentenciax.executeQuery();
+
+        Person person=new Person();
+        if (resx.next()){
+            cnx.close();
+            PreparedStatement sentencia=cn.prepareStatement("select * from person where username=? and pass=?");
+            sentencia.setString(1, username);
+            sentencia.setString(2, password);
+            ResultSet res=sentencia.executeQuery();
+            if (res.next()){
+                person.setCode(res.getInt("person_cod"));
+                person.setName(res.getString("pname"));
+                person.setType(res.getString("type"));
+                person.setAddress(res.getString("address"));
+                return person;
+            }else{
+                cnx.close();
+                person.setName("error");
+            }
+        }else{
+            cnx.close();
+            person.setName("naught");
+        }
+        return person;
+        
+    }
+    
     private Book setBook(Book book, ResultSet res) throws SQLException{
         //set most of the attributes of the Book object (genre will be arranged separately)
         book.setBookcode(res.getInt("book_cod"));
-        book.setIsbn(res.getInt("isbn"));
+        book.setIsbn(res.getString("isbn"));
         book.setTitle(res.getString("title"));
         book.setAutcode(res.getInt("author_cod"));
         book.setAutname(res.getString("name"));
@@ -30,13 +62,18 @@ public class RepoPortal {
         //concatenated with the first one and thus only has one genre.
         Collections.reverse(books);
         int code2=0;
+        
+        ArrayList<Book> toRemove = new ArrayList();
+ 
         for (Book book:books){
             if (book.getBookcode()==code2){
-                books.remove(book);
+                toRemove.add(book);
                 continue;
             }
             code2=book.getBookcode();
         }
+        books.removeAll(toRemove);
+        
         //Another Collections.reverse could be done here to get books back in Primary Key order, but JSP page will
         //order by title or author.
         return books;
@@ -46,7 +83,7 @@ public class RepoPortal {
         ArrayList<Book> books=new ArrayList();
         //get all books from database, put into ArrayList as Book objects
         Statement sentencia=cn.createStatement();
-        String booksql="select books.book_cod, books.isbn, books.title, books.author_cod, authors.aname, books.notes, bookgenre.genre from books join authors on books.author_cod=authors.author_cod left join (SELECT books.book_cod, title, genre FROM book_genre JOIN books ON books.book_cod = book_genre.book_cod JOIN genres ON genres.genre_cod = book_genre.genre_cod) bookgenre on books.book_cod=bookgenre.book_cod order by book_cod";
+        String booksql="select books.book_cod, books.isbn, books.title, books.author_cod, authors.name, books.notes, bookgenre.genre from books join authors on books.author_cod=authors.author_cod left join (select books.book_cod, title, genre from genrejunction join books on books.book_cod = genrejunction.book_cod join genres on genres.genre_cod = genrejunction.genre_cod) bookgenre on books.book_cod=bookgenre.book_cod order by book_cod";
         //booksql gives book code, isbn, title, author code, author name, notes and genre ordered by book code
         //Query is ordered by Primary Key to concatenate genres and erase duplicates. JSP page will have filters to order by author or title.
         ResultSet res=sentencia.executeQuery(booksql);
