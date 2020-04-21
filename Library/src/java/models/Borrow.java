@@ -3,6 +3,7 @@ package models;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 
 public class Borrow {
     private int bookcode;
@@ -58,16 +59,20 @@ public class Borrow {
 
     public void setFine() {
         //Create a LocalDate object for the day of today
-        LocalDate now = (LocalDate.now()).parse("2017-06-22");
-        //Convert outdate (sql.Date) into a LocalDate
-        LocalDate indate1 = (indate.toLocalDate()).parse("2017-06-22");
+        LocalDate now = LocalDate.now();
+        //Convert indate (java.sql.Date) into a LocalDate
+        LocalDate indate1 = indate.toLocalDate();
         //To convert LocalDate to SQL.date: java.sql.Date sqlDate = java.sql.Date.valueOf( todayLocalDate );
-        int difference=now.compareTo(indate1);
+        long difference= ChronoUnit.DAYS.between(indate1, now);
+        System.out.println(difference);
         if (difference>0){ //returns 0 if dates are equal, positive value if “this date” is greater than the otherDate, It returns negative value if “this date” is less than the otherDate.
+            System.out.println("entramos en el difference>0");
             if (persontype.equals("student")){
                 this.fine=difference*0.5;
+                System.out.println("student fine"+fine);
             }else{
                 this.fine=difference*0.3;
+                System.out.println("other fine"+fine);
             }
         }
         //else: fine is not set and will be null

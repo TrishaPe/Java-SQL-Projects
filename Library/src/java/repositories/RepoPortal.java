@@ -18,7 +18,7 @@ public class RepoPortal {
     public Person login(String username, String password) throws SQLException{
         Connection cnx = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","oracle");
         PreparedStatement sentenciax=cnx.prepareStatement("select username from person where username=?");
-        sentenciax.setString(1, password);
+        sentenciax.setString(1, username);
         ResultSet resx=sentenciax.executeQuery();
 
         Person person=new Person();
@@ -30,15 +30,15 @@ public class RepoPortal {
             ResultSet res=sentencia.executeQuery();
             if (res.next()){
                 person.setCode(res.getInt("person_cod"));
-                person.setName(res.getString("pname"));
+                person.setName(res.getString("name"));
                 person.setType(res.getString("type"));
                 person.setAddress(res.getString("address"));
                 return person;
-            }else{
+            }else{ //wrong password
                 cnx.close();
                 person.setName("error");
             }
-        }else{
+        }else{ //wrong username
             cnx.close();
             person.setName("naught");
         }

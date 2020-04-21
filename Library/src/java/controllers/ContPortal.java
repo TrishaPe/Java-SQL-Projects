@@ -23,13 +23,16 @@ public class ContPortal implements Controller{
         
         //get login credentials
         String username=hsr.getParameter("txtUser");
-        String password=hsr.getParameter("txtPass");
+        String password="error";
+        if (hsr.getParameter("txtPass")!= ""){
+            password=hsr.getParameter("txtPass");
+        }
         //check credentials
         Person person=repo.login(username, password);
         if (person.getName().equals("error")){ //wrong password
-            mv.addObject("pass");
+            mv.addObject("error", "pass");
         }else if (person.getName().equals("naught")){ //wrong username
-            mv.addObject("user");
+            mv.addObject("error", "name");
         }else{ //everything ok --> load Person object in session
             session.setAttribute("user", person);
             
