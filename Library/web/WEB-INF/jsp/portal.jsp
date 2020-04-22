@@ -11,6 +11,79 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script>
+            function BookCodeFilter() {
+              // Declare variables
+              var td, i, txtValue;
+              var input = document.getElementById("BookInput");
+              var filter = input.value.toUpperCase();
+              var table = document.getElementById("BorrowedTable");
+              var tr = table.getElementsByTagName("tr");
+
+              // Loop through all table rows, and hide those that don't match the search query
+              for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                  txtValue = td.textContent || td.innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                  } else {
+                    tr[i].style.display = "none";
+                  }
+                }
+              }
+            }
+            
+            function PersonFilter() {
+              // Declare variables
+              var td, i, txtValue;
+              var input = document.getElementById("PersonInput");
+              var filter = input.value.toUpperCase();
+              var table = document.getElementById("BorrowedTable");
+              var tr = table.getElementsByTagName("tr");
+
+              // Loop through all table rows, and hide those that don't match the search query
+              for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                  txtValue = td.textContent || td.innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                  } else {
+                    tr[i].style.display = "none";
+                  }
+                }
+              }
+            }
+            
+            function ReturnDateFilter() {
+              // Declare variables
+              var i, txtValue;
+              var filter = document.getElementById("LateInput").checked;
+              var table = document.getElementById("BorrowedTable");
+              var tr = table.getElementsByTagName("tr");
+
+              // Loop through all table rows, and hide those that don't match the search query
+              if (filter==true){
+                  for (i = 1; i < tr.length; i++) {
+                    //turn return date into Date object
+                    var date = tr[i].getElementsByTagName("td")[3].innerText;
+                    var year = date.split("-")[0];
+                    var month = date.split("-")[1];
+                    var day = date.split("-")[2];
+                    var rdate=new Date(year, month-1, day, 0, 0, 0);
+                    //Get today's date
+                    var now=new Date();
+                    
+                    if (now>rdate){
+                        tr[i].style.display = "";
+                    }else{
+                        tr[i].style.display = "none";
+                    }
+                  }
+                }
+              }
+            
+            
             function sortTable(n) {
               var shouldSwitch, switchcount = 0;
               var table = document.getElementById("BorrowedTable");
@@ -95,6 +168,13 @@
                 STAFF<br>
                 -view of all books that have been borrowed<br>
                 
+                <p>Note: in real life, books would be scanned. Inputting the book code is the most feasible option in this case.</p>
+                <label>Search by book code:</label><br>
+                <input type="text" id="BookInput" onkeyup="BookCodeFilter()"><br>
+                <label>Search by person type:</label><br>
+                <input type="text" id="PersonInput" onkeyup="PersonFilter()"><br>
+                <label>Search late books:</label><br>
+                <input type="checkbox" id="LateInput" onchange="ReturnDateFilter()"><br>
                 
                 <table id="BorrowedTable">
                     <tr>
