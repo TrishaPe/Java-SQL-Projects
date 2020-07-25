@@ -80,6 +80,10 @@
                         tr[i].style.display = "none";
                     }
                   }
+                }else{
+                    for (i = 1; i < tr.length; i++) {
+                      tr[i].style.display = "";
+                  }
                 }
               }
             

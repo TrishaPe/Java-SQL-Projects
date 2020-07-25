@@ -11,7 +11,15 @@ public class RepoStaff {
         this.cn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","oracle");
     }
     
+    public int DeleteBook(int code){
+        int affected=0;
+        return affected;
+    }
     
+    public int AddBook(String title, String author){
+        int success=0;
+        return success;
+    }
     
     
 }

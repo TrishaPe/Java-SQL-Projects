@@ -3,9 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Trisha/Documents/NetBeansProjects/Library/src/java/models/Borrow.java</file>
-            <file>file:/C:/Users/Trisha/Documents/NetBeansProjects/Library/web/WEB-INF/jsp/portal.jsp</file>
-            <file>file:/C:/Users/Trisha/Documents/NetBeansProjects/Library/src/java/controllers/ContPortal.java</file>
+            <file>file:/C:/Users/Trisha/Documents/NetBeansProjects/Library/src/java/controllers/ContBooklist.java</file>
+            <file>file:/C:/Users/Trisha/Documents/NetBeansProjects/Library/src/java/models/Book.java</file>
+            <file>file:/C:/Users/Trisha/Documents/NetBeansProjects/Library/web/WEB-INF/jsp/booklist.jsp</file>
             <file>file:/C:/Users/Trisha/Documents/NetBeansProjects/Library/src/java/repositories/RepoPortal.java</file>
             <file>file:/C:/Users/Trisha/Documents/NetBeansProjects/Library/web/WEB-INF/jsp/index.jsp</file>
         </group>

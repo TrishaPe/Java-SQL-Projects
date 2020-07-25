@@ -12,6 +12,7 @@
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
 
     <bean class="controllers.ContBooklist" id="booklist"/>
+    <bean class="controllers.ContStory" id="story"/>
     <bean class="controllers.ContPortal" id="portal"/>
 
     <!--
@@ -24,6 +25,7 @@
             <props>
                 <prop key="index.htm">indexController</prop>
                 <prop key="booklist.htm">booklist</prop>
+                <prop key="story.htm">story</prop>
                 <prop key="portal.htm">portal</prop>
             </props>
         </property>
