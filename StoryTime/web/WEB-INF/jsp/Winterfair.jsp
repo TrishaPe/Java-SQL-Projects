@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,5 +14,16 @@
     </head>
     <body>
         <h1>Winter Fair story</h1>
+        
+        <div>
+            ${paragraph[2]}<br/>
+        </div>
+        
+        <div>
+            <c:forEach items="${choices}" var="choice">
+                ${choice.option} = ${choice.target}<br/>
+            </c:forEach>
+        </div>
+        
     </body>
 </html>

@@ -11,9 +11,8 @@
 
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
 
-    <bean class="controllers.ContBooklist" id="booklist"/>
-    <bean class="controllers.ContPortal" id="portal"/>
-
+    
+    <bean class="controllers.ContStory" id="story"/>
     <!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but
     for the index controller we are using ParameterizableViewController, so we must
@@ -23,8 +22,7 @@
         <property name="mappings">
             <props>
                 <prop key="index.htm">indexController</prop>
-                <prop key="booklist.htm">booklist</prop>
-                <prop key="portal.htm">portal</prop>
+                <prop key="story.htm">story</prop>
             </props>
         </property>
     </bean>

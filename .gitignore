@@ -1,1 +1,6 @@
 LlenarUsuarios/
+/Library/build/
+/Test/nbproject/private/
+/Test/build/
+/Story time/nbproject/private/
+/StoryTime/nbproject/private/

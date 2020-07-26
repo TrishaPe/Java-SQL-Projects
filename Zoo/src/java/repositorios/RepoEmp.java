@@ -72,16 +72,13 @@ public class RepoEmp {
                 ResultSet res=sentencia.executeQuery();
                 
                 if (res.next()){//si la contraseña es igual tambien
-                    emp=new Empleado();
                     crearEmp(res, emp);
                     cn.close();
                 }else{//contraseña mal
-                    emp=new Empleado();
                     cn.close();
                     emp.setNombre("error");
                 }
             }else{//usuario no existe
-                emp=new Empleado();
                 cnx.close();
                 emp.setNombre("nada");
             }

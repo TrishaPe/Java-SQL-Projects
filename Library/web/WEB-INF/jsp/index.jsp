@@ -31,7 +31,6 @@
             <ul>
                 <li><a href="booklist.htm">List of books</a></li>
                 <li>Events</li>
-                <li><a href="story.htm">Winter Fair</a></li>
             </ul>
         </div>
 
