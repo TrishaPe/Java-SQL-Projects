@@ -6,12 +6,11 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Choice;
-//import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import repositories.RepoStory;
 
-public class ContStory implements Controller{
+public class ContStory extends MultiActionController{
     
     RepoStory repo;
     
@@ -19,22 +18,25 @@ public class ContStory implements Controller{
         this.repo=new RepoStory();
     }
     
-    @Override
-    public ModelAndView handleRequest(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public ModelAndView onLoad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv=new ModelAndView("Winterfair");
         
-        HashMap paragraph=repo.GetParagraph(2);
+        HashMap paragraph=repo.getParagraph(1);
         ArrayList<Choice> choices = repo.getChoices(1);
         
         mv.addObject("paragraph", paragraph);
         mv.addObject("choices", choices);
         
-        
         return mv;
         
-        //int number = Integer.parseInt(hsr.getParameter("number"));
     }
     
-    
+    public ModelAndView follow(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception{
+        ModelAndView mv=new ModelAndView("Winterfair");
+        
+        //int number = Integer.parseInt(hsr.getParameter("number"));
+        
+        return mv;
+    }
     
 }

@@ -5,10 +5,20 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Welcome to Spring Web MVC project</title>
+        <title>Story Time</title>
+        <style>
+            h1, h3{
+                padding: 15px;
+                margin: 15px;
+            }
+        </style>
     </head>
 
     <body>
-        <a href="story.htm">Winter Fair</a>
+        <h1>Story Time</h1>
+        <h3>Choose your story</h3>
+        <ul>
+            <li><a href="story.htm?load=onLoad">Winter Fair</a></li>
+        </ul>
     </body>
 </html>

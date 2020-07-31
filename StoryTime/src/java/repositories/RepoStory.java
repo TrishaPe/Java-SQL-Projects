@@ -7,6 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Choice;
 
+
+
 public class RepoStory {
     
     Connection cn;
@@ -17,7 +19,7 @@ public class RepoStory {
         this.cn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","oracle");
     }
     
-    public HashMap<Long, String> GetParagraph(int number){
+    public HashMap getParagraph(int number){
         try {
             HashMap<Long, String> paragraph = new HashMap();
             
@@ -29,6 +31,7 @@ public class RepoStory {
             
             while (res.next()){
                 paragraph.put(Long.valueOf(number), res.getString("text"));
+                System.out.println(res.getString("text"));
             }
             return paragraph;
             

@@ -12,7 +12,13 @@
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
 
     
-    <bean class="controllers.ContStory" id="story"/>
+    <bean class="controllers.ContStory" id="story">
+        <property name="methodNameResolver">
+            <bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+                <property name="paramName" value="load"/>
+            </bean>
+        </property>
+    </bean>
     <!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but
     for the index controller we are using ParameterizableViewController, so we must
