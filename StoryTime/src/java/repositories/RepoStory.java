@@ -19,9 +19,10 @@ public class RepoStory {
         this.cn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","oracle");
     }
     
-    public HashMap getParagraph(int number){
+    public String getParagraph(int number){
         try {
-            HashMap<Long, String> paragraph = new HashMap();
+            //HashMap<Long, String> paragraph = new HashMap();
+            String paragraph = "";
             
             String sql="select * from winterfair where paragraph_nr=?";
             PreparedStatement st=cn.prepareStatement(sql);
@@ -30,8 +31,8 @@ public class RepoStory {
             ResultSet res=st.executeQuery();
             
             while (res.next()){
-                paragraph.put(Long.valueOf(number), res.getString("text"));
-                System.out.println(res.getString("text"));
+                //paragraph.put(Long.valueOf(number), res.getString("text"));
+                paragraph = res.getString("text");
             }
             return paragraph;
             

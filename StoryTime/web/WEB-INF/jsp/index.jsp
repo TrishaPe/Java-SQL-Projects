@@ -20,5 +20,6 @@
         <ul>
             <li><a href="story.htm?load=onLoad">Winter Fair</a></li>
         </ul>
+        <script type="text/javascript">localStorage.clear();</script>
     </body>
 </html>

@@ -21,7 +21,8 @@ public class ContStory extends MultiActionController{
     public ModelAndView onLoad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv=new ModelAndView("Winterfair");
         
-        HashMap paragraph=repo.getParagraph(1);
+        //HashMap paragraph=repo.getParagraph(1);
+        String paragraph=repo.getParagraph(1);
         ArrayList<Choice> choices = repo.getChoices(1);
         
         mv.addObject("paragraph", paragraph);
@@ -31,11 +32,13 @@ public class ContStory extends MultiActionController{
         
     }
     
-    public ModelAndView follow(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception{
+    public ModelAndView loadNext(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception{
         ModelAndView mv=new ModelAndView("Winterfair");
-        
-        //int number = Integer.parseInt(hsr.getParameter("number"));
-        
+        int number = Integer.parseInt(hsr.getParameter("option"));
+        String paragraph=repo.getParagraph(number);
+        ArrayList<Choice> choices = repo.getChoices(number);
+        mv.addObject("paragraph", paragraph);
+        mv.addObject("choices", choices);
         return mv;
     }
     

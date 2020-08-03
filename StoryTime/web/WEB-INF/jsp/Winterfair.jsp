@@ -23,8 +23,10 @@
                     <h1>The Winter Fair</h1>
                     <h2 class="byline"></h2>
                 </div>
+                <div id="original"></div>
                 <div id="text">
-                    ${paragraph[1]}<br/>
+                    ${paragraph}<br/>
+                    ${number}
                 </div>
                 
                 <script> var options = new Array;</script>
@@ -36,7 +38,6 @@
                 </c:forEach>
                 
                 <div id="choices"></div>
-                
             </div>
         </div>
         
@@ -44,37 +45,50 @@
         <%--<script src="js/notmain.js" type="text/javascript"></script>--%>
         <script>
             //Store the existing part of the story in localstorage
-            let existingText = document.getElementById("text");
+            if (localStorage.getItem("existingtext")!==null){
+                var original=document.getElementById("original");
+                original.innerText=localStorage.getItem("existingtext");
+            }
+            var existingText = document.getElementById("original").innerText+document.getElementById("text").innerText;
             localStorage.setItem("existingtext", existingText);
             
             //Create choices
             let storyChoices = document.getElementById("choices");
-            var br = document.createElement("br");
             
             for (let option of options) {
                 var choiceParagraphElement = document.createElement('p');
                 choiceParagraphElement.classList.add("choice");
-                choiceParagraphElement.innerHTML="<a href='#'>" + option.text +"</a>";
+                choiceParagraphElement.innerHTML="<a href=story.htm?load=loadNext&option="+option.number+">" + option.text +"</a>";
                 storyChoices.appendChild(choiceParagraphElement);
             }
             
-            var choiceAnchorEl = choiceParagraphElement.querySelectorAll("a")[0];
-            console.log(choiceAnchorEl);
-            choiceAnchorEl.addEventListener("click", function(event) {
-
-                // Don't follow <a> link
-                event.preventDefault();
-
-                // Remove all existing choices
-                var choiceParagraphs=document.querySelectorAll("choices.p");
-                console.log(choiceParagraphs);
-                choiceParagraphs.removeChild("p");
-
-                // Aaand loop
-                continueStory();
-            });
             
             
+            
+            
+            
+            
+            
+            /* TAKE AWAY OPTIONS AFTER CHOICE HAS BEEN MADE
+            var choiceAnchorEl = document.querySelectorAll("a");
+            for (var i=0; i<choiceAnchorEl.length; i++){
+                choiceAnchorEl[i].addEventListener("click", function(event) {
+
+                    // Don't follow <a> link
+                    //event.preventDefault();
+
+                    // Remove all existing choices
+                    var choiceParagraphs = document.getElementById("choices");
+
+                    // As long as div has a child node, remove it
+                    while (choiceParagraphs.hasChildNodes()) {  
+                      choiceParagraphs.removeChild(choiceParagraphs.firstChild);
+                    }
+                    
+                    
+
+                });
+            }*/
         </script>
     </body>
 </html>
